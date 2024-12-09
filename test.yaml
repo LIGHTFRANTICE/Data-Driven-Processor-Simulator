@@ -1,0 +1,33 @@
+nodes:
+  '0x0013':
+    address: '0x0013'
+    calType: bin
+    func: add
+    goto: {}
+  node0:
+    address: '0x0011'
+    calType: uni
+    func: copy
+    goto:
+      left:
+        flag: left
+        node: '0x0013'
+  node1:
+    address: '0x0012'
+    calType: uni
+    func: copy
+    goto:
+      left:
+        flag: right
+        node: '0x0013'
+streams:
+  stream0:
+    data0:
+      flag: left
+      node: node0
+      value: '0x3F000000'
+  stream1:
+    data1:
+      flag: left
+      node: node1
+      value: '0x3F000000'

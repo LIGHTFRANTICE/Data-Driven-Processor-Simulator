@@ -3,19 +3,24 @@ import sys
 
 def getNodeAddr (ddpDict: dict, nodeName: str) -> str:
     if nodeName == 'output' :
+        print(f"Node {nodeName}: output Node, set address to 0x0000")
         return '0'*16
     elif nodeName in ddpDict['nodes'] :
-        return format(ddpDict['nodes'][nodeName]['address'], '016b')
+        print(f"Node {nodeName}: set address {format(int(ddpDict['nodes'][nodeName]['address'], base=0), '016b')}")
+        return format(int(ddpDict['nodes'][nodeName]['address'], base=0), '016b')
     else :
         raise ValueError(f"Node {nodeName} do not exist !!")
 
 def getNodeOprType (ddpDict: dict, nodeName: str) -> str:
     if nodeName == 'output' :
+        print(f"Node {nodeName}: output Node, set opration type to 0")
         return '0'
     elif nodeName in ddpDict['nodes'] :
         if ddpDict['nodes'][nodeName]['calType'] == 'uni' :
+            print(f"Node {nodeName}: set opration type to uni")
             return '1'
         elif ddpDict['nodes'][nodeName]['calType'] == 'bin' :
+            print(f"Node {nodeName}: set opration type to binary")
             return '0'
         else :
             raise ValueError(f"Wrong Oparator Type: {ddpDict[nodeName]['calType']} is setted in node: {nodeName} !!")
@@ -112,7 +117,7 @@ def getProgram (ddp: dict) -> dict :
             constCode = getConst(None)
 
         totalProgramLine = func + '_' + leftCode + '_' + rightCode + '_' + constCode
-        programLines[address] = totalProgramLine
+        programLines[int(address,base=0)] = totalProgramLine
     
     outputCode = funcMap('out') + '_1_' + '0'*16 + '_0_0_0_' + '0'*16 + '_0_0_0_0_' + '0'*16
     programLines[10000] = outputCode
@@ -136,7 +141,7 @@ def getTokens (ddp: dict) -> list :
             else :
                 raise ValueError(f"The flag set in {stream}.{data} is invaliable !!")
             
-            value = format(data['value'], '032b')
+            value = format(int(data['value'],base=0), '032b')
 
             token = address + '_' + direction + '_' + oprType + '_' + colorCode + '_' + value
             tokens.append(token)
