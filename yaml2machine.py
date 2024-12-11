@@ -3,31 +3,26 @@ import sys
 
 def getNodeAddr (ddpDict: dict, nodeName: str) -> str:
     if nodeName == 'output' :
-        print(f"Node {nodeName}: output Node, set address to 0x0000")
         return '0'*16
     elif nodeName in ddpDict['nodes'] :
-        print(f"Node {nodeName}: set address {format(int(ddpDict['nodes'][nodeName]['address'], base=0), '016b')}")
         return format(int(ddpDict['nodes'][nodeName]['address'], base=0), '016b')
     else :
         raise ValueError(f"Node {nodeName} do not exist !!")
 
 def getNodeOprType (ddpDict: dict, nodeName: str) -> str:
     if nodeName == 'output' :
-        print(f"Node {nodeName}: output Node, set opration type to 0")
         return '0'
     elif nodeName in ddpDict['nodes'] :
         if ddpDict['nodes'][nodeName]['calType'] == 'uni' :
-            print(f"Node {nodeName}: set opration type to uni")
             return '1'
         elif ddpDict['nodes'][nodeName]['calType'] == 'bin' :
-            print(f"Node {nodeName}: set opration type to binary")
             return '0'
         else :
             raise ValueError(f"Wrong Oparator Type: {ddpDict[nodeName]['calType']} is setted in node: {nodeName} !!")
     else :
         raise ValueError(f"Node {nodeName} do not exist !!")
 
-def getGoto (ddpDict: dict, goToDict: dict) -> str:
+def getGoto (ddpDict: dict, goToDict: dict | None) -> str:
     if not goToDict:
         flag = '0'
         addr = '0'*16
@@ -54,7 +49,7 @@ def getGoto (ddpDict: dict, goToDict: dict) -> str:
 
     return flag + '_' + addr + '_' + oprType + '_' + direction
 
-def getConst (constDict: dict) -> str :
+def getConst (constDict: dict | None) -> str :
     if not constDict :
         flag = '0'
         direction = '0'
@@ -97,24 +92,33 @@ def funcMap (func : str) -> str :
 
 def getProgram (ddp: dict) -> dict :
     programLines = {}
-    for node in ddp['nodes'].values():
+    for nodeName, node in ddp['nodes'].items():
         address = node['address']
         func = funcMap(node['func'])
+
+        print(f"Node {nodeName}: set address to {address}")
+        print(f"Node {nodeName}: set opration type to {node['calType']}")
 
         if 'left' in node['goto'] : 
             leftCode = getGoto(ddp, node['goto']['left'])
         else :
             leftCode = getGoto(ddp, None)
+        
+        print(f"Node {nodeName}: set GOTO left to {leftCode}")
             
         if 'right' in node['goto'] :
             rightCode = getGoto(ddp, node['goto']['right'])
         else :
             rightCode = getGoto(ddp, None)
         
+        print(f"Node {nodeName}: set GOTO right to {leftCode}")
+
         if 'const' in node:
             constCode = getConst(node['const'])
         else :
             constCode = getConst(None)
+        
+        print(f"Node {nodeName}: set const to {constCode}")
 
         totalProgramLine = func + '_' + leftCode + '_' + rightCode + '_' + constCode
         programLines[int(address,base=0)] = totalProgramLine

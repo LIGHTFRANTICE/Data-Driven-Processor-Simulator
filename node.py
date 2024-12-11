@@ -1,4 +1,10 @@
+from dataclasses import dataclass
+from numpy import uint16
 
+@dataclass
+class Const:
+    flag: str | None = None
+    value: uint16 | None = None
 
 class Node:
     '''
@@ -16,14 +22,18 @@ class Node:
             right :
                 node,
                 flag,
+        const :
+            flag,
+            value,
     '''
 
-    def __init__(self, name, address, calType, func, goto=None):
-        self.name = name
-        self.address = address  # 16-bit address
-        self.calType = calType  # calculation type
-        self.func = func  # Function key in function list
-        self.goto = goto if goto else {'left': {'node': None, 'flag': None}, 'right': {'node': None, 'flag': None}}
+    def __init__(self, name: str, address: str, calType: str, func: str, goto: dict | None = None, const: Const | None = None):
+        self.name: str = name
+        self.address: str = address  # 16-bit address
+        self.calType: str = calType  # calculation type
+        self.func: str = func  # Function key in function list
+        self.goto: dict = goto if goto else {'left': {'node': None, 'flag': None}, 'right': {'node': None, 'flag': None}}
+        self.const: Const | None = const if const else None
 
     def connect(self, direction: str, nodeName: str, flag: str):
         if direction in ['left', 'right']:

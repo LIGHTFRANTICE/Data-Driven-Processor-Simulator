@@ -28,14 +28,14 @@ def convertDataStreams(dataStreams: ds.DataStreams) -> dict :
         dataStreamsDict[dataStreamName] = {}
         for dataName, data in dataStream.items():
             dataStreamsDict[dataStreamName][dataName] = {}
-            dataStreamsDict[dataStreamName][dataName]['node'] = data.node.name
+            dataStreamsDict[dataStreamName][dataName]['node'] = data.node
             dataStreamsDict[dataStreamName][dataName]['flag'] = data.flag
             dataStreamsDict[dataStreamName][dataName]['value'] = data.value
 
     return dataStreamsDict
 
 
-def convert2Yaml(nodeList: list[nd.Node], dataStreams: ds.DataStreams, fileName: str) :
+def convert2Yaml(nodeList: list[nd.Node], dataStreams: ds.DataStreams, fileName: str) -> None:
 
     nodeDict = convertNodeList(nodeList)
 
@@ -54,7 +54,7 @@ def main () :
 
     from dataStruct import DataStreams
     from node import Node
-    from calInt import add
+    from operators import add
 
     nodeList = []
 
