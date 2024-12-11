@@ -1,5 +1,5 @@
 from dataStruct import DataStreams
-from node import Node
+from node import Node, Const
 from operators import add, sub
 from toYaml import convert2Yaml
 from yaml2Machine import getProgram, getTokens
@@ -12,7 +12,7 @@ def main () :
 
     # Example usage
     nodeList.append(Node(name="node0", address='0x0000', calType='uni', func='copy'))
-    nodeList.append(Node(name="node1", address='0x0001', calType='uni', func='copy'))
+    # nodeList.append(Node(name="node1", address='0x0001', calType='uni', func='copy'))
 
 
     # Create data streams
