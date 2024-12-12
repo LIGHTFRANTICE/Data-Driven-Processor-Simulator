@@ -3,7 +3,7 @@ Definition of data stream struct
 '''
 
 from dataclasses import dataclass
-from node import Node
+from lib.node import Node
 
 @dataclass
 class Data:

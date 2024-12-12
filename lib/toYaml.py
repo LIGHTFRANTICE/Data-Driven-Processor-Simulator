@@ -1,5 +1,5 @@
-import node as nd
-import dataStruct as ds
+import lib.node as nd
+import lib.dataStruct as ds
 
 import yaml
 
@@ -52,9 +52,9 @@ def convert2Yaml(nodeList: list[nd.Node], dataStreams: ds.DataStreams, fileName:
 
 def main () :
 
-    from dataStruct import DataStreams
-    from node import Node
-    from operators import add
+    from lib.dataStruct import DataStreams
+    from lib.node import Node
+    from lib.operators import add
 
     nodeList = []
 

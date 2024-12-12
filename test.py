@@ -1,8 +1,8 @@
-from dataStruct import DataStreams
-from node import Node, Const
-from operators import add, sub
-from toYaml import convert2Yaml
-from yaml2Machine import getProgram, getTokens
+from lib.dataStruct import DataStreams
+from lib.node import Node, Const
+from lib.operators import add, sub
+from lib.toYaml import convert2Yaml
+from lib.yaml2Machine import getProgram, getTokens
 # import sys
 import yaml
 

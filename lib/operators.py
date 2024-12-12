@@ -1,5 +1,5 @@
-from node import Node
-from dataStruct import Data
+from lib.node import Node
+from lib.dataStruct import Data
 
 def isValiable(x: Node) -> bool:
     outputPortDict = {
@@ -206,7 +206,7 @@ def sub(x: Node | Data, y: Node | Data, address: str) -> Node:
 
 def main():
 
-    from dataStruct import DataStreams
+    from lib.dataStruct import DataStreams
 
     nodeList = []
 
