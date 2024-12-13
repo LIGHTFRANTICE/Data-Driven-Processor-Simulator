@@ -111,7 +111,7 @@ def getProgram (ddp: dict) -> dict :
         else :
             rightCode = getGoto(ddp, None)
         
-        print(f"Node {nodeName}: set GOTO right to {leftCode}")
+        print(f"Node {nodeName}: set GOTO right to {rightCode}")
 
         if 'const' in node:
             constCode = getConst(node['const'])
@@ -120,11 +120,12 @@ def getProgram (ddp: dict) -> dict :
         
         print(f"Node {nodeName}: set const to {constCode}")
 
-        totalProgramLine = func + '_' + leftCode + '_' + rightCode + '_' + constCode
+        if node['func'] == 'out':
+            totalProgramLine = funcMap('out') + '_1_' + '0'*16 + '_0_0_0_' + '0'*16 + '_0_0_0_0_' + '0'*16
+        else:
+            totalProgramLine = func + '_' + leftCode + '_' + rightCode + '_' + constCode
         programLines[int(address,base=0)] = totalProgramLine
     
-    outputCode = funcMap('out') + '_1_' + '0'*16 + '_0_0_0_' + '0'*16 + '_0_0_0_0_' + '0'*16
-    programLines[10000] = outputCode
     programLines = dict(sorted(programLines.items()))
     return programLines
         
@@ -146,6 +147,7 @@ def getTokens (ddp: dict) -> list :
                 raise ValueError(f"The flag set in {stream}.{data} is invaliable !!")
             
             value = format(int(data['value'],base=0), '032b')
+            print(f"convert value {data['value']} to {value}")
 
             token = address + '_' + direction + '_' + oprType + '_' + colorCode + '_' + value
             tokens.append(token)
@@ -156,10 +158,13 @@ def main() :
     with open(sys.argv[1], 'r') as yml:
         ddp = yaml.safe_load(yml)   
 
-    programLines = getProgram(ddp)
-    tokens = getTokens(ddp)
+    
+    
 
     print(f"{'='*10}PROGRAM{'='*10}")
+    programLines = getProgram(ddp)
+
+    print()
     for line in programLines.values() :
         print(line)
 
@@ -167,6 +172,9 @@ def main() :
     print()
 
     print(f"{'='*10}TOKENS{'='*10}")
+    tokens = getTokens(ddp)
+
+    print()
     for token in tokens :
         print(token)
 
