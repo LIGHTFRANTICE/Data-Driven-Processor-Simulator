@@ -25,12 +25,13 @@ def convertDataStreams(dataStreams: ds.DataStreams) -> dict :
     dataStreamsDict = {}
 
     for dataStreamName, dataStream in dataStreams.streams.items() :
-        dataStreamsDict[dataStreamName] = {}
-        for dataName, data in dataStream.items():
-            dataStreamsDict[dataStreamName][dataName] = {}
-            dataStreamsDict[dataStreamName][dataName]['node'] = data.node
-            dataStreamsDict[dataStreamName][dataName]['flag'] = data.flag
-            dataStreamsDict[dataStreamName][dataName]['value'] = data.value
+        dataStreamsDict[dataStreamName] = []
+        for data in dataStream:
+            dataStreamsDict[dataStreamName].append(
+                {'node': data.node, 
+                 'flag': data.flag, 
+                 'value': data.value}
+            )
 
     return dataStreamsDict
 
