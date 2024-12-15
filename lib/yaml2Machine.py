@@ -136,7 +136,7 @@ def getTokens (ddp: dict) -> list :
         colorCode = format(color, '012b')
         color = color + 1
 
-        for data in stream.values() :
+        for data in stream:
             address = getNodeAddr(ddp, data['node'])
             oprType = getNodeOprType(ddp, data['node'])
             if data['flag']=='left' :
