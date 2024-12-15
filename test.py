@@ -37,8 +37,6 @@ def fp32ToFp16(inputValue: float) -> tuple[list[Node], DataStreams]:
             dataStreams.add_data(f'stream{streamCnt}', f'data{dataCnt}', node_name="0x0007", flag="right", value="0x0F800000")
             dataCnt += 1
 
-            
-
     nodeList.append(opr.copy(Data(), '0x0000')) #CP0
     nodeList.append(opr.copy(nodeList[0], '0x0001')) #CP1
     nodeList.append(opr.andByBit(Data(), nodeList[0], '0x0002'))
