@@ -40,16 +40,13 @@ class DataStreams:
 
     def add_stream(self, stream_name: str):
         if stream_name not in self.streams:
-            self.streams[stream_name] = {}  # Add a new stream
+            self.streams[stream_name] = []  # Add a new stream
         else:
             raise ValueError(f"Stream '{stream_name}' already exists.")
 
     def add_data(self, stream_name: str, data_name: str, node_name: str | None = None, flag: str | None = None, value: str | None = None):
         if stream_name in self.streams:
-            if data_name not in self.streams[stream_name]:
-                self.streams[stream_name][data_name] = Data(node=node_name, flag=flag, value=value)
-            else:
-                raise ValueError(f"Data '{data_name}' already exists in stream '{stream_name}'.")
+            self.streams[stream_name].append(Data(node=node_name, flag=flag, value=value))
         else:
             raise ValueError(f"Stream '{stream_name}' does not exist.")
 
