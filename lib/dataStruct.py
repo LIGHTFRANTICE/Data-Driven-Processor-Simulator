@@ -44,7 +44,7 @@ class DataStreams:
         else:
             raise ValueError(f"Stream '{stream_name}' already exists.")
 
-    def add_data(self, stream_name: str, data_name: str, node_name: str | None = None, flag: str | None = None, value: str | None = None):
+    def add_data(self, stream_name: str, node_name: str | None = None, flag: str | None = None, value: str | None = None):
         if stream_name in self.streams:
             self.streams[stream_name].append(Data(node=node_name, flag=flag, value=value))
         else:
@@ -68,8 +68,8 @@ def main () :
     data_streams.add_stream('stream1')
 
     # Add data to streams
-    data_streams.add_data('stream0', 'data0', node1.name, 'left', '0x3F000000')
-    data_streams.add_data('stream1', 'data0', node2.name, 'left', '0x3F000000')
+    data_streams.add_data('stream0', node1.name, 'left', '0x3F000000')
+    data_streams.add_data('stream1', node2.name, 'left', '0x3F000000')
 
     print(data_streams)
 
