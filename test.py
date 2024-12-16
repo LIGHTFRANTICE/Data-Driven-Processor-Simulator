@@ -24,16 +24,24 @@ def fp32ToFp16(inputValue: float, nodeList: list[Node], dataStreams: DataStreams
             dataStreams.add_data(f'stream{streamCnt}', node_name="0x0006", flag="left", value=f"0x{(15<<23):08X}")
             dataStreams.add_data(f'stream{streamCnt}', node_name="0x0007", flag="right", value="0x0F800000")
 
-    nodeList.append(opr.copy(nodeList[-1], '0x0001')) #CP1
-    nodeList.append(opr.andByBit(Data(), nodeList[0], '0x0002'))
-    nodeList.append(opr.andByBit(Data(), nodeList[1], '0x0003'))
-    nodeList.append(opr.andByBit(nodeList[1], Data(), '0x0004'))
-    nodeList.append(opr.sub(Data(), nodeList[3], '0x0005'))
-    nodeList.append(opr.sub(Data(), nodeList[5], '0x0006'))
-    nodeList.append(opr.andByBit(nodeList[6], Data(), '0x0007'))
-    nodeList.append(opr.orByBit(nodeList[7], nodeList[4], '0x0008'))
-    nodeList.append(opr.orByBit(nodeList[2], nodeList[8], '0x0009'))
-
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.copy(nodeList[-1], f'0x{nxtAddr}')) #CP1
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.andByBit(Data(), nodeList[0], f'0x{nxtAddr}'))
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.andByBit(Data(), nodeList[1], f'0x{nxtAddr}'))
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.andByBit(nodeList[1], Data(), f'0x{nxtAddr}'))
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.sub(Data(), nodeList[3], f'0x{nxtAddr}'))
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.sub(Data(), nodeList[5], f'0x{nxtAddr}'))
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.andByBit(nodeList[6], Data(), f'0x{nxtAddr}'))
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.orByBit(nodeList[7], nodeList[4], f'0x{nxtAddr}'))
+    nxtAddr = ''.join(f'{byte:02x}' for byte in np.int16(len(nodeList)).tobytes()[::-1])
+    nodeList.append(opr.orByBit(nodeList[2], nodeList[8], f'0x{nxtAddr}'))
 
     return nodeList, dataStreams
 
