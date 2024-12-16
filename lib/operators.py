@@ -274,10 +274,8 @@ def main():
     data_streams.add_stream('stream1')
 
     # Add data to streams
-    data_streams.add_data('stream0', 'data0',
-                          nodeList[0].name, 'left', '0x3F000000')
-    data_streams.add_data('stream1', 'data1',
-                          nodeList[1].name, 'left', '0x3F000000')
+    data_streams.add_data('stream0', nodeList[0].name, 'left', '0x3F000000')
+    data_streams.add_data('stream1', nodeList[1].name, 'left', '0x3F000000')
     data_streams.add_data('stream1', 'data2', value="0xFF")
     data_streams.add_data('stream1', 'data3', value="0xFF")
 
