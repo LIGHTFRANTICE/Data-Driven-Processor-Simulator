@@ -8,23 +8,21 @@ class Const:
 
 class Node:
     '''
-    node can connect to another node
-
     struct node :
-        name
-        address, //16'b
-        calType, // uni | bin
-        func, //key in func list
-        goto : //a list with left? and right?
+        name: str
+        address: 16'b
+        calType: uni | bin
+        func: key in func list
+        goto : a list with left? and right?
             left :
-                node,
-                flag,
+                node: nodeName
+                flag: left or right
             right :
-                node,
-                flag,
+                node: nodeName
+                flag: left or right
         const :
-            flag,
-            value,
+            flag: left or right
+            value: 16'b
     '''
 
     def __init__(self, name: str, address: str, calType: str, func: str, goto: dict | None = None, const: Const | None = None):
